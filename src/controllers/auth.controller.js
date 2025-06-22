@@ -9,6 +9,7 @@ import { isValidEmail } from "../utils/validation.js";
 
 
 
+
 const handleLogin = async (email) => {
 
   const otp = await requestOtp(email)
@@ -63,17 +64,6 @@ export const signup = async function (req, res) {
 //   res.status(200).json(response);
 // };
 
-export const verifyOtp = async (req, res) => {
-  const { email,otp } = req.body;
-  console.log(email,otp)
-  if(email && otp){
-    const verify = await verifyOTP(email,otp)
-    res.status(200).json({verify});
-  }
-
-};
-
-
 export const handleOtpVerification = async (req, res) => {
   const { email, otp } = req.body;
 
@@ -94,7 +84,7 @@ export const handleOtpVerification = async (req, res) => {
     if (!isValid.success) {
       return res.status(401).json(isValid);
     }
-
+  
     return res.status(200).json(isValid);
 
   } catch (error) {

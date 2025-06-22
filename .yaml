@@ -1,0 +1,72 @@
+
+---
+
+## 📂 Detailed Breakdown
+
+### `/src/config/`
+Holds environment-based configuration for things like:
+- `dotenv` setup
+- Mail config (e.g., Ethereal, Gmail, Resend)
+- Puppeteer browser setup (if used)
+- Redis (if caching OTP externally)
+
+### `/src/routes/`
+Defines your application's route endpoints.
+Example:
+- `auth.routes.js` – `/api/auth`
+- `otp.routes.js` – `/api/otp`
+- `index.js` – Combines and registers all routes in one place
+
+### `/src/controllers/`
+Contains the **core logic** for handling incoming requests.
+- Receives validated input
+- Calls the relevant service functions
+- Returns formatted responses
+
+### `/src/services/`
+Encapsulates reusable operations such as:
+- Sending OTP emails
+- Interacting with browser automation
+- Creating/verifying tokens
+
+### `/src/utils/`
+Utility functions used across the app. For example:
+- `generateOtp.js`
+- `validateEmail.js`
+- `formatResponse.js`
+
+### `/src/middlewares/`
+Reusable Express middlewares:
+- Custom error handling
+- Validating user input
+- JWT authentication
+
+### `/src/cache/`
+Handles temporary storage of OTPs or tokens.
+- Uses `node-cache` for development
+- Can be swapped for Redis for production
+
+### `/src/app.js`
+Initializes your Express app:
+- Sets up middlewares (e.g., `cors`, `express.json`)
+- Registers API routes
+
+### `/src/index.js`
+The entry point that:
+- Loads environment variables
+- Starts the HTTP server
+
+---
+
+## 🔐 Environment Variables (`.env`)
+
+Example:
+
+```env
+PORT=5050
+FRONTEND_URL=http://localhost:3003
+
+SMTP_HOST=smtp.ethereal.email
+SMTP_PORT=587
+SMTP_USER=your_user@ethereal.email
+SMTP_PASS=your_password
