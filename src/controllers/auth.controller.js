@@ -84,7 +84,7 @@ export const handleOtpVerification = async (req, res) => {
     if (!isValid.success) {
       return res.status(401).json(isValid);
     }
-  
+    
     return res.status(200).json(isValid);
 
   } catch (error) {

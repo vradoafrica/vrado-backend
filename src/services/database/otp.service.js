@@ -15,11 +15,14 @@ export const verifyOTP = async(email,otp)=>{
       return {success:false,message: 'OTP expired' };
 
     }else if(otpRecord){
-      await OTP.deleteMany({ email }); // Clean up all expired/used OTPs
-      const userDetails = await User.findOneAndUpdate({ email }, { isVerified: true });
-      console.log(userDetails)
+      await OTP.deleteMany({ email }); 
+      const userDetails = await User.findOneAndUpdate(
+        { email },
+        { isVerified: true },
+        { new: true, runValidators: true }
+      );
       const token = generateToken(userDetails)
-      
+
       return {success:true,message: 'OTP has been verified successfully',data:{userDetails,token} }
     }else{
       return {success:false, message: 'Unable to Verify OTP' };
