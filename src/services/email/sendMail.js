@@ -4,6 +4,9 @@ import {createTransport} from "nodemailer"
 export default async function sendEmail({ to, subject, text, html }) {
   // Create reusable transporter using SMTP transport
   const transporter = createTransport({
+    host: 'smtp.gmail.com',
+    port: 587, // or 465 for SSL
+    secure: false, // true for port 465
     service: 'gmail', // or another SMTP provider like 'hotmail', 'yahoo', etc.
     auth: {
       user: process.env.MAIL_ADDRESS, // your email address
