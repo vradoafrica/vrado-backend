@@ -3,6 +3,7 @@ import User from "../../model/user.model.js";
 import { generateOtp } from "../../utils/generateOtp.js";
 import { isValidEmail } from "../../utils/validation.js";
 import generateToken from "../../utils/generateToken.js"
+import sendEmail from "../email/sendMail.js";
 
 export const verifyOTP = async(email,otp)=>{
     const otpRecord = await OTP.findOne({ email, otp });
@@ -37,7 +38,59 @@ export const requestOtp = async (email) => {
 
   const otpGen = await OTP.create({ email, otp, expiresAt });
 
-  if(otpGen){
+
+
+    // SEND OTP TO USERS EMAIL
+  
+  const text = `Welcome,
+  
+  Your One-Time Password (OTP) is: ${otp}
+  
+  Please enter this code to complete your action. This OTP is valid for the next 5 minutes.
+  
+  If you didn't request this, please ignore this message.
+  
+  Thanks,
+  Vrado Ai`;
+  
+  const html = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Your OTP Code</title>
+    <style>
+      .otp-box {
+        font-size: 24px;
+        font-weight: bold;
+        background: #f4f4f4;
+        padding: 10px 20px;
+        display: inline-block;
+        border-radius: 5px;
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Welcome ,</p>
+    <p>Your One-Time Password (OTP) is:</p>
+    <div class="otp-box">${otp}</div>
+    <p>Please enter this code to complete your action. This OTP is valid for the next 10 minutes.</p>
+    <p>If you didn't request this, please ignore this message.</p>
+    <br>
+    <p>Thanks,<br><strong>Your App Name</strong></p>
+  </body>
+  </html>
+  `;
+  
+  
+  
+    const emailSent = await sendEmail({to:email,subject:'Your OTP Code',text,html});
+    
+  
+  console.log(emailSent)
+
+  if(otpGen && emailSent){
 
    return {
       success: true,

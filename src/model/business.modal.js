@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document, model, models } from 'mongoose'
+import mongoose from 'mongoose'
 
-const BusinessSchema = new Schema(
+const BusinessSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,27 +10,35 @@ const BusinessSchema = new Schema(
     name: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      unique: true,
     },
     email: {
       type: String,
       required: true,
       lowercase: true,
-      trim: true
+      trim: true,
+      unique: true,
     },
     phone: {
       type: String,
-      required: true
+      required: true,
+      unique: true,
     },
     address: {
       type: String,
       required: true
     },
     website: {
-      type: String
+      type: String,
+      unique: true,
     },
     logoUrl: {
       type: String
+    },
+    approved:{
+      type: Boolean,
+      default:true,
     }
   },
   {

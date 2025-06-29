@@ -1,28 +1,35 @@
-import nodemailer from "nodemailer"
-export default async function sendMail (email,otp) {
+import {createTransport} from "nodemailer"
+
+
+export default async function sendEmail({ to, subject, text, html }) {
+  // Create reusable transporter using SMTP transport
+  const transporter = createTransport({
+    service: 'gmail', // or another SMTP provider like 'hotmail', 'yahoo', etc.
+    auth: {
+      user: process.env.MAIL_ADDRESS, // your email address
+      pass: process.env.MAIL_PASSWORD  // your email password or app-specific password
+    }
+  });
+
+  // Set up email options
+  const mailOptions = {
+    from: `"Vrado AI" <${process.env.MAIL_ADDRESS}>`,
+    to,
+    subject,
+    text,   // plain text body
+    html    // HTML body (optional)
     
-    return true
+  };
+  console.log(mailOptions)
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ', info.response);
+    return info;
+  } catch (error) {
+    console.error('Error sending email:', error);
+    throw error;
+  }
 }
 
 
-
-// const transporter = nodemailer.createTransport({
-//     service: "gmail",
-//     auth: {
-//       user: "me@gmail.com",
-//       pass: process.env.GOOGLE_APP_PASSWORD,
-//     },
-//   });
-
-// // Wrap in an async IIFE so we can use await.
-// (async () => {
-//   const info = await transporter.sendMail({
-//     from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
-//     to: "bar@example.com, baz@example.com",
-//     subject: "Hello ✔",
-//     text: "Hello world?", // plain‑text body
-//     html: "<b>Hello world?</b>", // HTML body
-//   });
-
-//   console.log("Message sent:", info.messageId);
-// })();

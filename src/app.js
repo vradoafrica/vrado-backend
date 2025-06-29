@@ -3,10 +3,12 @@ import http from "http"
 import cors from 'cors';
 import authRouter from './routes/auth.route.js';
 import userRouter from './routes/user.route.js';
+import businessRoute from './routes/business.route.js';
+
 import { Server } from 'socket.io';
 import { authenticate } from './middleware/authorize.middleware.js';
 import handleSocket from './websocket/socket.js';
-import cookieParser from 'cookie-parser';
+
 
 
 
@@ -29,10 +31,11 @@ app.use(cors({
 }));
 
 app.use(express.json());  
-app.use(cookieParser())
+
 
 app.use("/api/v1/auth",authRouter)
 app.use("/api/v1/users",authenticate,userRouter)
+app.use("/api/v1/business",authenticate,businessRoute)
 
 
 

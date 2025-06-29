@@ -13,16 +13,12 @@ import { isValidEmail } from "../utils/validation.js";
 const handleLogin = async (email) => {
 
   const otp = await requestOtp(email)
-
-  // SEND OTP TO USERS EMAIL
-  const emailSent = await sendMail(email, otp);
-
   return otp
 };
 
 export const signup = async function (req, res) {
   const { email } = req.body;
-
+  
   // CHECK IF USER EXISTS IN DB
   const validEmail = isValidEmail(email)
   if (!validEmail) res.status(400).json({message:"Valid Email required"});
@@ -35,7 +31,6 @@ export const signup = async function (req, res) {
     res.status(200).json(login);
   } else {
     const login = await handleLogin(email);
-    console.log(login)
     res.status(200).json(login);
   }
 };

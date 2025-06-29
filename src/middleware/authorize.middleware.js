@@ -9,7 +9,9 @@ export const authenticate = (req, res, next) => {
 
   const token = authHeader.split(' ')[1];
   const  {decoded} = verifyToken(token)
-
+  console.log(decoded)
+  if(!decoded)res.status(401).json({ message: 'Invalid or expired token' });
+  
     req.user = decoded; // now available in route
     next();
     

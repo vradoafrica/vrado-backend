@@ -13,10 +13,6 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    approved: {
-      type: Boolean,
-      default: false,
-    },
     role:{
       type:String,
       default: "Agent" 
