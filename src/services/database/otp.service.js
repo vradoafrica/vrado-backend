@@ -78,7 +78,7 @@ export const requestOtp = async (email) => {
     <p>Please enter this code to complete your action. This OTP is valid for the next 10 minutes.</p>
     <p>If you didn't request this, please ignore this message.</p>
     <br>
-    <p>Thanks,<br><strong>Your App Name</strong></p>
+    <p>Thanks,<br><strong>Vrado</strong></p>
   </body>
   </html>
   `;
