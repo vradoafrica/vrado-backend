@@ -19,6 +19,7 @@ const handleLogin = async (email) => {
 export const signup = async function (req, res) {
   const { email } = req.body;
   
+  try {
   // CHECK IF USER EXISTS IN DB
   const validEmail = isValidEmail(email)
   if (!validEmail) res.status(400).json({message:"Valid Email required"});
@@ -32,7 +33,15 @@ export const signup = async function (req, res) {
   } else {
     const login = await handleLogin(email);
     res.status(200).json(login);
+  }  
+  } catch (error) {
+    
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error.',
+    });
   }
+  
 };
 
 // export const requestOtp = async (req, res) => {
