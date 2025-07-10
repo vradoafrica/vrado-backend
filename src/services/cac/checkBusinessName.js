@@ -12,13 +12,16 @@ try {
 
 
     if (!request.ok) {
- 
-       throw new Error('Server is temporarily unavailable. Please try again Later');
+        const response = await request.json()
+
+        
+          console.log(response)
+       throw new Error(response.message);
     } else{
         const response = await request.json()
 
         let success = response.status
-          console.log(success)
+          console.log(response)
     
         if(success == "200"){
             responseData = response?.recommendedAction
@@ -31,7 +34,7 @@ try {
     
     
 } catch (error) {
-    responseData = error.message
+    responseData = {success:false,message:error.message}
 }
 console.log(responseData)
 return responseData
