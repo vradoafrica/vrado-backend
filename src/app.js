@@ -23,10 +23,16 @@ app.use(cors({
 app.use(express.json());  
 app.use(limiter)
 
+// (AGENTS) ENDPOINTS
 app.use("/api/v1/auth",authRouter)
 app.use("/api/v1/users",authenticate,userRouter)
 app.use("/api/v1/business",authenticate,businessRoute)
+
+//(Customer) ENDPOINTS
 app.use("/api/v1/cac/checkname",businessNameCheck)
+app.use("/api/v1/cac/namereserver",(req,res)=>{
+  
+})
 
 
 

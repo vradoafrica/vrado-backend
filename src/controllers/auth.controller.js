@@ -72,6 +72,7 @@ export const handleOtpVerification = async (req, res) => {
   const { email, otp } = req.body;
 
   const validEmail = isValidEmail(email)
+  
   if (!validEmail) res.status(400).json({message:"Valid Email required"});
 
   // Check if input is provided
@@ -84,7 +85,7 @@ export const handleOtpVerification = async (req, res) => {
 
   try {
     const isValid = await verifyOTP(email, otp);
-    console.log(isValid)
+    
     if (!isValid.success) {
       return res.status(401).json(isValid);
     }
