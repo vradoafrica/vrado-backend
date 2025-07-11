@@ -6,6 +6,7 @@ import businessRoute from './routes/business.route.js';
 import { authenticate } from './middleware/authorize.middleware.js';
 import limiter from './middleware/rateLimiter.middlewate.js';
 import businessNameCheck from './routes/cac/businessName.route.js';
+import countryRouter from './routes/country.route.js';
 
 
 
@@ -22,6 +23,9 @@ app.use(cors({
 
 app.use(express.json());  
 app.use(limiter)
+
+
+app.use("/api/v1/country",countryRouter)
 
 // (AGENTS) ENDPOINTS
 app.use("/api/v1/auth",authRouter)
